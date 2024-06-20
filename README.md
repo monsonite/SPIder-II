@@ -14,7 +14,7 @@ U2 a 74HC86 quad 2-input XOR and U3 a quad 2 input NAND 74HC00, are configured a
 
 This allows the PC count to either be incremented by 1, or loaded from a serial coded address packet, which can either come from the ROM, via the B-register U5 and U6 - a pair of 74HC165 8-bit parallel load shift registers, or from an external data source. 
 
-The clock generator and timing sequencer generates a chain of 16 gated clock pulses and a low going gating pulse. These are equivalent to an SPI clock and SPI /SS (slave select) signal. The rising edge at the end of this /gating signal is used to latch the output of the program counter into the internal resisters of U7 and U8.
+The clock generator and timing sequencer generates a train of 16 gated clock pulses and a low going gating pulse. These are equivalent to an SPI clock and SPI /SS (slave select) signal. The rising edge at the end of this /gating signal is used to latch the output of the program counter into the internal resisters of U7 and U8.
 
 This ROM sequencer performs the basic operations of serving serial stored data - similar in principle to an SPI flash memory.
 
@@ -27,7 +27,23 @@ The timing is as follows:
 
 The timing sequence generator is a 4-bit counter U9 a 74HC193. Its overflow is used to set an SR latch U10 which is then reset after 16 cycles.
 
-U9 and U10 are not specific to the ROM sequencer, and could be located on another board, provided that the generate the gated clock pulse chain and the low going gate /SS signal
+U9 and U10 are not specific to the ROM sequencer, and could be located on another board, provided that the generate the gated clock pulse train and the low going gate /SS signal.
+
+This particular timing generator can be used to generate different lengths of pulse trains. If used on an accumulator, the different clock sequences can be used to manipulate the data - performing left and right shifts, and byte swaps.
+
+S Field  	Operation
+
+0101	  Left Shift 2
+0110	  Left Shift 1	
+0111	  No Shift	8-bit transfer
+1000	  Right Shift 1
+1001	  Right Shift 2
+1010	  Right Shift 3		
+1011	  Nybble Swap (bit shift)
+1100
+1110	  No Shift 16-bit transfer
+
+Having created what is effectively a serial ROM circuit, the next task is to apply it to the wider application of a complete bit serial CPU.
 
 
 
