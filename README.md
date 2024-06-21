@@ -34,14 +34,23 @@ This particular timing generator can be used to generate different lengths of pu
 S Field  	Operation
 
 0101	  Left Shift 2
+
 0110	  Left Shift 1	
+
 0111	  No Shift	8-bit transfer
+
 1000	  Right Shift 1
+
 1001	  Right Shift 2
+
 1010	  Right Shift 3		
+
 1011	  Nybble Swap (bit shift)
+
 1100
+
 1110	  No Shift 16-bit transfer
+
 
 Having created what is effectively a serial ROM circuit, the next task is to apply it to the wider application of a complete bit serial CPU.
 
