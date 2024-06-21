@@ -46,5 +46,6 @@ S Field  	Operation
 Having created what is effectively a serial ROM circuit, the next task is to apply it to the wider application of a complete bit serial CPU.
 
 
+ROM_Sequencer_1 adds a pair of 74HC299 shift registers to receive the output of the B-register 16-clock cycles later.
 
 
