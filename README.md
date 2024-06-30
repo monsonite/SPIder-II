@@ -1,7 +1,3 @@
-![image](https://github.com/monsonite/SPIder-II/assets/758847/06a9e173-5a9e-4d9a-89fb-00c8f8e6abe7)
-
-
-
 # SPIder
 
 An experimental 16-bit / 8-bit bit serial computer made mostly from 74HCxx series logic.
