@@ -2,11 +2,60 @@
 
 
 
-# SPIder-MITE
+# SPIder
+
 An experimental 16-bit / 8-bit bit serial computer made mostly from 74HCxx series logic.
 
 
-This project arose from the desire to build a computer using 74HC series logic. Bit serial arithmetic was chosen as a means of keeping the chip count low, whilst learning how to use shift registers to perform parallel to serial conversion and data transfer.
+
+## Update - June 30th 2024.
+
+![image](https://github.com/monsonite/SPIder-II/assets/758847/303b990e-030c-4b52-9e08-fb392828ea4d)
+
+
+As a pre-requisite for the SPIder design, a minimal implementation has been prototyped onto a small (110 x120mm) 4-layer pcb.
+
+This board is intended for a forthcoming educational workshop, and so a small board footprint and low component count has been chosen for keeping costs down.
+
+It also partly removes the need to create a full prototype on solderless breadboards - which is not only time consuming to build, but prone to wiring mistakes and reliability issues.
+
+The pcb is known as "SHREK"  - Shift Register Exploration Kit, and is based on through-hole components for easy home-construction.
+
+The top half of the board is the ROM, SRAM and the principal shift registers - Accumulator, B- Register, Program Counter and Memory Address Register. 74HC165, 74HC595 and 74HC299 registers have been used.
+
+
+The input and output to these shift registers has been brought to jumper headers, allowing serial data to be injected or reconfiguration of the interconnectivity between registers.
+
+
+The ROM and SRAM parallel address and data buses  are also brought out to expansion connectors.
+
+
+The lower half of the board is the combinational logic - the ALU, the instruction decoder, the half adder that increments the PC, the clock oscillator, clock-divider, and timing sequence generator.
+
+
+Most of the principal signals are brought to breakout connectors.
+
+
+One of my main problems was finding an efficient way of connecting the various serial bit streams. 
+
+A 2:1 multiplexer is effectively 3 2-input nand gates and an inverter. This effectively uses a whole quad NAND 74HC00, just for a single mux.
+
+
+A-O-I gates, like the 74xx51, would have been ideal  - sadly obsoleted. I am looking at the CD4053, triple DPST analogue switch as a possible alternative - but I am concerned that it might be a bit slow.
+
+
+The design includes a link selectable clock divider, allowing clocks from 4kHz to 4MHz to be selected by moving a jumper link (Uses a 4060 14 stage binary counter).
+
+
+Another feature is a timing sequencer (74HC193 U/D counter) that can generate a variable number of pulses to allow left and right shifting and byte/nybble swapping.
+
+
+
+
+
+# SPIder
+
+This project arose from the desire to build a simple 16-bit computer using 74HC series logic. Bit serial arithmetic was chosen as a means of keeping the chip count low, whilst learning how to use shift registers to perform parallel to serial conversion and data transfer.
 
 One motivation was to create a computer from simple logic that could interface directly to serial SPI memory, peripherals and sensors. These devices need to have serial commands and data sent to them and then perform a bidirectional exchange of data with the SPI master device.
 
