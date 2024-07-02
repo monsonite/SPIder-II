@@ -45,6 +45,39 @@ The design includes a link selectable clock divider, allowing clocks from 4kHz t
 
 Another feature is a timing sequencer (74HC193 U/D counter) that can generate a variable number of pulses to allow left and right shifting and byte/nybble swapping.
 
+Here is a simplified block diagram of the machine:
+
+![image](https://github.com/monsonite/SPIder-II/assets/758847/8a3f34e4-f62f-4542-98aa-22704858f8c6)
+
+As shown in the block diagram, it uses ten, 8-bit  shift registers, arranged as five, 16-bit devices.
+
+I have colour coded the serial data, the parallel data and the control signal paths.
+
+Currently, the output of any of the shift registers can be multiplexed to the input of any other.
+
+The I/O SPI register is not strictly necessary as the Accumulator could take on this role.
+
+Not shown is a set of output parallel output lines from the ROM to the address inputs of the RAM. This allows 12-bits of the ROM output to be used to directly address the RAM.
+
+The clock distribution paths, the reset signal, the shift register load and register clock signals have been omitted for clarity.
+
+Accumulator   2 x 74HC299 universal, tristate shift register
+
+B Register  2 x 74HC165 PISO shift register
+
+PC   2 x 74HC595  SIPO shift register with output latch
+
+MAR 2 x 74HC595
+
+SPI I/O register 2 x 74HC299 (optional)
+
+4-way register multiplexers - each are 1 half of a 74HC139
+
+PC and ALU carry flipflops   1x 74HC74
+
+ALU and PC half adder 1 x 74HC283
+
+Clock sequencer  74HC4060, 74HC4017 74HC00 74HC161
 
 
 
