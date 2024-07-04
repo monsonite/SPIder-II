@@ -11,6 +11,11 @@ An experimental 16-bit / 8-bit bit serial computer made mostly from 74HCxx serie
 
 As a pre-requisite for the SPIder design, a minimal implementation has been prototyped onto a small (110 x120mm) 4-layer pcb.
 
+Here is a cut-down version of SHREK to test out the ALU and Program Counter logic 
+
+![SHREK_3](https://github.com/monsonite/SPIder-II/assets/758847/021067b9-463b-483c-8257-8ac56ac08eb7)
+
+
 This board is intended for a forthcoming educational workshop, and so a small board footprint and low component count has been chosen for keeping costs down.
 
 It also partly removes the need to create a full prototype on solderless breadboards - which is not only time consuming to build, but prone to wiring mistakes and reliability issues.
@@ -37,7 +42,18 @@ One of my main problems was finding an efficient way of connecting the various s
 A 2:1 multiplexer is effectively 3 2-input nand gates and an inverter. This effectively uses a whole quad NAND 74HC00, just for a single mux.
 
 
-A-O-I gates, like the 74xx51, would have been ideal  - sadly obsoleted. I am looking at the CD4053, triple DPST analogue switch as a possible alternative - but I am concerned that it might be a bit slow.
+A-O-I gates, like the 74xx51, would have been ideal  - sadly obsoleted. 
+
+I have chosen a 74HC126 quad tristate buffer as an alternative.
+
+Two buffer outputs are connected together as a pair, with their individual tristate controls being driven with complementary signals. This way, only the output from one buffer can appear on the output at a time. The 14 pin package conveniently makes two separate multiplexers, saving at leat one IC package.
+
+Further svings in ICs have been made in the ALU and PC incrementer. The ALU requires a full adder and the PC incrementer requires a half adder. This can be achieved by suitably partitioning up a 74HC283, 4-bit binary adder into two separate halves. The half adder uses bit 0 and bit 1, and will never overflow into bit 2. The full adder uses bit 2 and 3 to produce the sum and the carry output.
+
+The diagram below shows this arrangement.
+
+![image](https://github.com/monsonite/SPIder-II/assets/758847/1eb3a999-33ee-4883-94db-6ea3b7ed06d6)
+
 
 
 The design includes a link selectable clock divider, allowing clocks from 4kHz to 4MHz to be selected by moving a jumper link (Uses a 4060 14 stage binary counter).
@@ -75,7 +91,7 @@ SPI I/O register 2 x 74HC299 (optional)
 
 PC and ALU carry flipflops   1x 74HC74
 
-ALU and PC half adder 1 x 74HC283
+ALU and PC half adder 1 x 74HC283 1 x 74HC00, 1 x 74HC86, 1 x 74HC74, 1 x 74HC126
 
 Clock sequencer  74HC4060, 74HC4017 74HC00 74HC161
 
